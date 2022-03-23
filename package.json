@@ -1,0 +1,14 @@
+{
+  "name": "testimonials",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Dmytro <dmytro.osiychuk@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  }
+}
