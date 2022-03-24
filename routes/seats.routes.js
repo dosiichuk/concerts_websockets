@@ -5,10 +5,8 @@ const { v4: uuidv4 } = require('uuid');
 let db = require('../db');
 
 router.route('/seats').get((req, res, next) => {
-  res.status(200).json({
-    message: 'ok',
-    data: db.seats,
-  });
+  console.log('getting seats');
+  res.status(200).json(db.seats);
 });
 
 router.route('/seats/random').get((req, res) => {
@@ -16,10 +14,7 @@ router.route('/seats/random').get((req, res) => {
   console.log(id);
   const foundItem = db.seats.filter((item) => item.id === id);
   if (foundItem.length > 0) {
-    res.json({
-      message: 'ok',
-      data: foundItem,
-    });
+    res.json(foundItem);
   } else {
     res.status(404).json({
       message: 'not found',
@@ -31,10 +26,7 @@ router.route('/seats/:id').get((req, res) => {
   const { id } = req.params;
   const foundItem = db.seats.filter((item) => item.id === parseInt(id));
   if (foundItem.length > 0) {
-    res.json({
-      message: 'ok',
-      data: foundItem,
-    });
+    res.json(foundItem);
   } else {
     res.status(404).json({
       message: 'not found',
@@ -43,12 +35,15 @@ router.route('/seats/:id').get((req, res) => {
 });
 
 router.route('/seats').post((req, res) => {
+  console.log('adding seat');
   const { day, seat, client, email } = req.body;
+  if (db.seats.some((entry) => entry.day === day && entry.seat === seat)) {
+    return res.status(409).json({
+      message: 'The seat is already taken',
+    });
+  }
   db.seats.push({ day, seat, client, email, id: uuidv4() });
-  res.status(200).json({
-    message: 'added',
-    data: db.seats,
-  });
+  res.status(200).json(db.seats);
 });
 
 router.route('/seats/:id').put((req, res) => {

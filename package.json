@@ -5,10 +5,12 @@
   "author": "Dmytro <dmytro.osiychuk@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build": "cd client && yarn install && yarn build"
   }
 }
