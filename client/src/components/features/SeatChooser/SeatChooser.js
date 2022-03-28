@@ -1,20 +1,26 @@
 import React from 'react';
+import io from 'socket.io-client';
 import { Button, Progress, Alert } from 'reactstrap';
 
 import './SeatChooser.scss';
 
 class SeatChooser extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { freeSeats: 50 };
+  }
   componentDidMount() {
-    const { loadSeats } = this.props;
+    const { loadSeats, updateSeats } = this.props;
     loadSeats();
-    this.interval = setInterval(() => {
-      loadSeats();
-    }, 120000);
+    this.socket = io('localhost:8000');
+    this.socket.on('updatedSeats', (seats) => {
+      updateSeats(seats);
+      this.setState((prevState) => ({
+        ...prevState,
+        freeSeats: 50 - seats.length,
+      }));
+    });
   }
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   isTaken = (seatId) => {
     const { seats, chosenDay } = this.props;
 
@@ -69,6 +75,7 @@ class SeatChooser extends React.Component {
             {[...Array(50)].map((x, i) => prepareSeat(i + 1))}
           </div>
         )}
+        <div>Free seats: {this.state.freeSeats} / 50</div>
         {requests['LOAD_SEATS'] && requests['LOAD_SEATS'].pending && (
           <Progress animated color="primary" value={50} />
         )}
