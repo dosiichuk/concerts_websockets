@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const socket = require('socket.io');
 
 const app = express();
 
@@ -14,6 +15,12 @@ app.use(cors());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '/client/build')));
 
+//middleware adding io object to req
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
+
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
 app.use('/api', seatsRoutes);
@@ -22,6 +29,12 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
 
-app.listen(process.env.PORT || 8000, () => {
+const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running on port: 8000');
+});
+
+const io = socket(server);
+
+io.on('connection', (socket) => {
+  console.log('New socket');
 });

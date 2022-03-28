@@ -7,6 +7,7 @@ let db = require('../db');
 router.route('/seats').get((req, res, next) => {
   console.log('getting seats');
   res.status(200).json(db.seats);
+  req.io.emit('updatedSeats', db.seats);
 });
 
 router.route('/seats/random').get((req, res) => {
@@ -44,6 +45,7 @@ router.route('/seats').post((req, res) => {
   }
   db.seats.push({ day, seat, client, email, id: uuidv4() });
   res.status(200).json(db.seats);
+  req.io.emit('updatedSeats', db.seats);
 });
 
 router.route('/seats/:id').put((req, res) => {
