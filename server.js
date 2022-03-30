@@ -3,6 +3,8 @@ const cors = require('cors');
 const path = require('path');
 const socket = require('socket.io');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' });
 
 const app = express();
 
@@ -35,7 +37,11 @@ const server = app.listen(process.env.PORT || 8000, () => {
 });
 
 // connects our backend code with the database
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', {
+const DB = process.env.DATABASE.replace(
+  '<password>',
+  process.env.DATABASE_PASSWORD
+);
+mongoose.connect(DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
