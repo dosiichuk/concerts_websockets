@@ -14,4 +14,17 @@ router.route('/concerts/:id').put(ConcertsController.updateOne);
 
 router.route('/concerts/:id').delete(ConcertsController.deletOne);
 
+//additional routes for testing
+router
+  .route('/concerts/performer/:performer')
+  .get(ConcertsController.getByPerformer);
+
+router.route('/concerts/genre/:genre').get(ConcertsController.getByGenre);
+
+router
+  .route('/concerts/price/:price_min/:price_max')
+  .get(ConcertsController.getByPriceRange);
+
+router.route('/concerts/day/:day').get(ConcertsController.getByDay);
+
 module.exports = router;

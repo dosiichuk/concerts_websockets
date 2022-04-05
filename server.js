@@ -37,11 +37,15 @@ const server = app.listen(process.env.PORT || 8000, () => {
 });
 
 // connects our backend code with the database
-const DB = process.env.DATABASE.replace(
+
+const NODE_ENV = process.env.NODE_ENV;
+let dbUrl = process.env.DATABASE.replace(
   '<password>',
   process.env.DATABASE_PASSWORD
 );
-mongoose.connect(DB, {
+if (NODE_ENV === 'test') dbUrl = 'mongodb://localhost:27017/newwaveDBtest';
+
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -58,3 +62,5 @@ const io = socket(server);
 io.on('connection', (socket) => {
   console.log('New socket');
 });
+
+module.exports = server;

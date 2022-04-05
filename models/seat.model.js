@@ -5,7 +5,7 @@ const seatSchema = mongoose.Schema({
   client: { type: String, required: true },
   email: { type: String, required: true },
   day: { type: Number, required: true },
-  //   concert: { type: String, required: true, ref: 'Concert' },
+  // concert: { type: String, required: true, ref: 'Concert' },
 });
 
 module.exports = mongoose.model('Seat', seatSchema);
