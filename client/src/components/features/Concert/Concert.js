@@ -17,11 +17,6 @@ const Concert = ({ performer, price, genre, day, image, ...props }) => (
       </Col>
       <Col xs="6">
         <div className="concert__info">
-          <img
-            className="concert__info__back"
-            src={image}
-            alt={performer.name}
-          />
           <h2 className="concert__info__performer">{performer.name}</h2>
           <h3 className="concert__info__genre">{genre}</h3>
           <p className="concert__info__tickets">
