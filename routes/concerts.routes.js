@@ -1,4 +1,5 @@
 const express = require('express');
+const { body } = require('express-validator');
 const router = express.Router();
 const ConcertsController = require('../controllers/concerts.controller');
 
@@ -8,7 +9,16 @@ router.route('/concerts/random').get(ConcertsController.getRandom);
 
 router.route('/concerts/:id').get(ConcertsController.getOneById);
 
-router.route('/concerts').post(ConcertsController.createOne);
+router
+  .route('/concerts')
+  .post(
+    [
+      body('performer').blacklist('\\[$#/{}&\\]'),
+      body('price').blacklist('\\[$#/{}&\\]'),
+      body('genre').blacklist('\\[$#/{}&\\]'),
+    ],
+    ConcertsController.createOne
+  );
 
 router.route('/concerts/:id').put(ConcertsController.updateOne);
 

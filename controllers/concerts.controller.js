@@ -44,11 +44,12 @@ exports.getOneById = async (req, res) => {
 exports.createOne = async (req, res) => {
   try {
     const { performer, genre, price, day, image } = req.body;
+
     const newConcert = new Concert({ performer, genre, price, day, image });
     await newConcert.save();
     res.json({ message: 'ok', data: newConcert });
   } catch (err) {
-    res.status.json({ message: err });
+    res.status(500).json({ message: err });
   }
 };
 
