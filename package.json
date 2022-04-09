@@ -16,7 +16,7 @@
     "mongo-sanitize": "1.0.1",
     "mongoose": "5.7.1",
     "nodemon": "^2.0.15",
-    "onchange": "6.1.0",
+    "onchange": "6.1.1",
     "slugify": "^1.6.5",
     "snyk": "1.235.0",
     "socket.io": "2",
