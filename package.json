@@ -13,7 +13,7 @@
     "express-validator": "^6.14.0",
     "helmet": "3.21.1",
     "mocha": "^9.2.2",
-    "mongo-sanitize": "1.0.1",
+    "mongo-sanitize": "1.1.0",
     "mongoose": "5.7.1",
     "nodemon": "^2.0.15",
     "onchange": "6.1.0",
